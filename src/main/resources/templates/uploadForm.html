@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ZipFile Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+<form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
+    <p>Upload a file:</p>
+    <input type="file" name="myFile"/>
+    <input type="submit" value="Process"/>
+</form>
+</body>
+</html>
