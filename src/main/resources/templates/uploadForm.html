@@ -8,11 +8,23 @@
 <body>
 <div th:if="${message}">
     <h2 th:text="${message}"/>
+<!--    <a th:href="${file}" th:text="${file}"/>-->
+    <p th:text="${file}"/>
+    <br><a href="/downloadZip">Download zipped file</a>
 </div>
 <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
     <p>Upload a file:</p>
     <input type="file" name="myFile"/>
     <input type="submit" value="Process"/>
 </form>
+
+<div>
+    <h2>Files uploaded:</h2>
+    <ul>
+        <li th:each="file : ${zipFiles}">
+            <a th:href="${file}" th:text="${file}" />
+        </li>
+    </ul>
+</div>
 </body>
 </html>
