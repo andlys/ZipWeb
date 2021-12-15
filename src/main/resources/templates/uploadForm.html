@@ -8,9 +8,6 @@
 <body>
 <div th:if="${message}">
     <h2 th:text="${message}"/>
-<!--    <a th:href="${file}" th:text="${file}"/>-->
-    <p th:text="${file}"/>
-    <br><a href="/downloadZip">Download zipped file</a>
 </div>
 <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
     <p>Upload a file:</p>
