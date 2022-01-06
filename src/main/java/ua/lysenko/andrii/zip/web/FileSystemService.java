@@ -39,22 +39,20 @@ public abstract class FileSystemService implements StorageService {
     public Stream<Path> getAllFiles() throws IOException {
         return Files.walk(baseDir).filter(path -> !path.equals(baseDir))
                 .filter(path -> ! Files.isDirectory(path))
-                .map(path -> baseDir.relativize(path));
+                .map(baseDir::relativize);
     }
 
     @Override
     public Resource getFile(String fileName) throws FileNotFoundException {
         Path outputZip = tmpZipDir.resolve( FilenameUtils.getBaseName(fileName) + ".zip");
         Zipper.zip(baseDir.resolve(fileName).toString(), outputZip.toString());
-        Resource resourceZipped = new InputStreamResource(new FileInputStream(outputZip.toFile()));
-        return resourceZipped;
+        return new InputStreamResource(new FileInputStream(outputZip.toFile()));
     }
 
     @Override
     public Resource getAllFilesZip() throws FileNotFoundException {
         Path outputZip = tmpZipDir.resolve(System.currentTimeMillis() + ".zip");
         Zipper.zip(baseDir.toString(), outputZip.toString());
-        Resource resourceZipped = new InputStreamResource(new FileInputStream(outputZip.toFile()));
-        return resourceZipped;
+        return new InputStreamResource(new FileInputStream(outputZip.toFile()));
     }
 }
