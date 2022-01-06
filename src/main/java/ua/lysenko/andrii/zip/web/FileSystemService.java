@@ -3,7 +3,6 @@ package ua.lysenko.andrii.zip.web;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.lysenko.andrii.zip.Zipper;
 
@@ -12,14 +11,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-@Service
-public class FileSystemService implements StorageService {
+public abstract class FileSystemService implements StorageService {
 
-    protected Path baseDir = Paths.get("D:\\storage\\files\\");
-    protected Path tmpZipDir = baseDir.getParent().resolve("tmp");
+    protected final Path baseDir;
+    protected final Path tmpZipDir;
+
+    public FileSystemService(Path baseDir, Path tmpZipDir) {
+        this.baseDir = baseDir;
+        this.tmpZipDir = baseDir.getParent().resolve(tmpZipDir);
+    }
 
     public void init() throws IOException {
         Files.createDirectories(baseDir);

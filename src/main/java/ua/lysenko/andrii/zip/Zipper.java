@@ -1,7 +1,6 @@
 package ua.lysenko.andrii.zip;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -50,7 +49,7 @@ public class Zipper {
     private static void zipFile(File fileIn, ZipOutputStream zos, Path relativeDir) throws IOException {
         String zipPath = "";
         if (relativeDir.toFile().isDirectory()) {
-            zipPath = relativeDir.getFileName() + System.lineSeparator() + relativeDir.relativize(fileIn.toPath());
+            zipPath = relativeDir.getFileName() + "/" + relativeDir.relativize(fileIn.toPath());
         } else {
             zipPath = fileIn.getName();
         }
@@ -63,10 +62,9 @@ public class Zipper {
     private static void zipDirectory(File fileIn, ZipOutputStream zos, Path relativeDir) throws IOException {
         String zipEntryName;
         if (fileIn.toPath().equals(relativeDir)) {
-            zipEntryName = String.format("%s%s", relativeDir.getFileName(), System.lineSeparator());
+            zipEntryName = String.format("%s/", relativeDir.getFileName());
         } else {
-            zipEntryName = String.format("%s%s%s%s", relativeDir.getFileName(), System.lineSeparator(),
-                    relativeDir.relativize(fileIn.toPath()), System.lineSeparator());
+            zipEntryName = String.format("%s/%s/", relativeDir.getFileName(), relativeDir.relativize(fileIn.toPath()));
         }
         print("dirPath " + zipEntryName);
         zos.putNextEntry(new ZipEntry(zipEntryName));
