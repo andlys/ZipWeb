@@ -55,7 +55,7 @@ public class Zipper {
             zipPath = fileIn.getName();
         }
         zos.putNextEntry(new ZipEntry(zipPath));
-        writeBytes(zos, fileIn);
+        FileUtils.writeBytes(zos, fileIn);
         zos.closeEntry();
         print("filePath " + zipPath);
     }
@@ -70,15 +70,5 @@ public class Zipper {
         print("dirPath " + zipEntryName);
         zos.putNextEntry(new ZipEntry(zipEntryName));
         zos.closeEntry();
-    }
-
-    private static void writeBytes(ZipOutputStream zos, File fileIn) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(fileIn)) {
-            final int fiveMb = 5*1024*1024;
-            byte[] buffer = new byte[fiveMb];
-            for (int readBytesAmount = inputStream.read(buffer); readBytesAmount >= 0; readBytesAmount = inputStream.read(buffer)) {
-                zos.write(buffer, 0, readBytesAmount);
-            }
-        }
     }
 }

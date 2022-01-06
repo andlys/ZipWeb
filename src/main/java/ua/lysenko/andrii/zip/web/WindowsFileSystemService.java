@@ -31,7 +31,7 @@ public class WindowsFileSystemService implements StorageService {
         init();
         Resource resource = multipartFile.getResource();
         Path uploadedFilePath = baseDir.resolve(resource.getFilename());
-        Files.write(uploadedFilePath, resource.getInputStream().readAllBytes());
+        Files.copy(resource.getInputStream(), uploadedFilePath);
     }
 
     @Override
