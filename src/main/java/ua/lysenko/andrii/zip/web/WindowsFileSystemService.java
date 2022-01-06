@@ -18,27 +18,41 @@ import java.util.stream.Stream;
 @Service
 public class WindowsFileSystemService implements StorageService {
 
-    private Path baseDir = Paths.get("D:\\files\\");
+    private Path baseDir = Paths.get("D:\\storage\\files\\");
+    private Path tmpZipDir = baseDir.getParent().resolve("tmp");
+
+    private void init() throws IOException {
+        Files.createDirectories(baseDir);
+        Files.createDirectories(tmpZipDir);
+    }
 
     @Override
     public void storeFile(MultipartFile multipartFile) throws IOException {
+        init();
         Resource resource = multipartFile.getResource();
-        Path uploadedFilePath = Paths.get(baseDir.toString(), resource.getFilename());
+        Path uploadedFilePath = baseDir.resolve(resource.getFilename());
         Files.write(uploadedFilePath, resource.getInputStream().readAllBytes());
-        Path outputZip = baseDir.resolve( FilenameUtils.getBaseName(resource.getFilename()) + ".zip");
-        Zipper.zip(uploadedFilePath.toString(), outputZip.toString());
     }
 
     @Override
     public Stream<Path> getAllFiles() throws IOException {
         return Files.walk(baseDir).filter(path -> !path.equals(baseDir))
+                .filter(path -> ! Files.isDirectory(path))
                 .map(path -> baseDir.relativize(path));
     }
 
     @Override
     public Resource getFile(String fileName) throws FileNotFoundException {
-        Path outputZip = baseDir.resolve( FilenameUtils.getBaseName(fileName) + ".zip");
-        // suppose that file is already zipped
+        Path outputZip = tmpZipDir.resolve( FilenameUtils.getBaseName(fileName) + ".zip");
+        Zipper.zip(baseDir.resolve(fileName).toString(), outputZip.toString());
+        Resource resourceZipped = new InputStreamResource(new FileInputStream(outputZip.toFile()));
+        return resourceZipped;
+    }
+
+    @Override
+    public Resource getAllFilesZip() throws FileNotFoundException {
+        Path outputZip = tmpZipDir.resolve(System.currentTimeMillis() + ".zip");
+        Zipper.zip(baseDir.toString(), outputZip.toString());
         Resource resourceZipped = new InputStreamResource(new FileInputStream(outputZip.toFile()));
         return resourceZipped;
     }

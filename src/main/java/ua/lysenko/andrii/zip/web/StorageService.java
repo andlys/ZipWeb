@@ -15,4 +15,6 @@ public interface StorageService {
     public Stream<Path> getAllFiles() throws IOException;
 
     public Resource getFile(String fileName) throws FileNotFoundException;
+
+    public Resource getAllFilesZip() throws FileNotFoundException;
 }

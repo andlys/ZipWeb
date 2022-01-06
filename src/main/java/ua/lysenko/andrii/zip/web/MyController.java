@@ -1,6 +1,7 @@
 package ua.lysenko.andrii.zip.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +31,7 @@ public class MyController {
     public String uploadForm(Model model) throws IOException {
         model.addAttribute("zipFiles",
                 storageService.getAllFiles()
-                        .map(path -> "downloadZip/" + path.toString()).collect(Collectors.toList()));
+                        .map(path -> "download/zip/" + path.toString()).collect(Collectors.toList()));
         return "uploadForm";
     }
 
@@ -46,13 +47,24 @@ public class MyController {
         return "redirect:/uploadForm";
     }
 
-    @GetMapping("/downloadZip/{fileName:.+}")
+    @GetMapping("/download/zip/{fileName:.+}")
     @ResponseBody
     public ResponseEntity<Resource> downloadZip(@PathVariable String fileName) throws FileNotFoundException {
         log.info(fileName);
         Resource resourceZipped = storageService.getFile(fileName);
+        String fileNameZip = FilenameUtils.getBaseName(fileName) + ".zip";
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + fileName + "\"").body(resourceZipped);
+                "attachment; filename=\"" + fileNameZip + "\"").body(resourceZipped);
+    }
+
+    @GetMapping("/download/zipAll")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadZipAll() throws FileNotFoundException {
+        log.info("zip all files");
+        Resource resourceZipped = storageService.getAllFilesZip();
+        String fileNameZip = "all_files_" + System.currentTimeMillis() + ".zip";
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + fileNameZip + "\"").body(resourceZipped);
     }
 
     @ExceptionHandler(FileNotFoundException.class)
