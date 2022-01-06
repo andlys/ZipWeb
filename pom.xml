@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ua.lysenko.andrii.zip.web</groupId>
-    <artifactId>ZipWeb</artifactId>
+    <artifactId>zip_web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ZipWeb</name>
     <description>ZipWeb with Spring Boot</description>
