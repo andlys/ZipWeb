@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 
 public interface StorageService {
 
+    public void init() throws IOException;
+
     public void storeFile(MultipartFile file) throws IOException;
 
     public Stream<Path> getAllFiles() throws IOException;

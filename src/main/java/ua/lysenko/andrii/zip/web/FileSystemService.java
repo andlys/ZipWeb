@@ -16,19 +16,18 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 @Service
-public class WindowsFileSystemService implements StorageService {
+public class FileSystemService implements StorageService {
 
-    private Path baseDir = Paths.get("D:\\storage\\files\\");
-    private Path tmpZipDir = baseDir.getParent().resolve("tmp");
+    protected Path baseDir = Paths.get("D:\\storage\\files\\");
+    protected Path tmpZipDir = baseDir.getParent().resolve("tmp");
 
-    private void init() throws IOException {
+    public void init() throws IOException {
         Files.createDirectories(baseDir);
         Files.createDirectories(tmpZipDir);
     }
 
     @Override
     public void storeFile(MultipartFile multipartFile) throws IOException {
-        init();
         Resource resource = multipartFile.getResource();
         Path uploadedFilePath = baseDir.resolve(resource.getFilename());
         Files.copy(resource.getInputStream(), uploadedFilePath);

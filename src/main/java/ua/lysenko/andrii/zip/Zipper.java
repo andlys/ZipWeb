@@ -50,7 +50,7 @@ public class Zipper {
     private static void zipFile(File fileIn, ZipOutputStream zos, Path relativeDir) throws IOException {
         String zipPath = "";
         if (relativeDir.toFile().isDirectory()) {
-            zipPath = relativeDir.getFileName() + "\\" + relativeDir.relativize(fileIn.toPath());
+            zipPath = relativeDir.getFileName() + System.lineSeparator() + relativeDir.relativize(fileIn.toPath());
         } else {
             zipPath = fileIn.getName();
         }
@@ -63,9 +63,10 @@ public class Zipper {
     private static void zipDirectory(File fileIn, ZipOutputStream zos, Path relativeDir) throws IOException {
         String zipEntryName;
         if (fileIn.toPath().equals(relativeDir)) {
-            zipEntryName = String.format("%s\\", relativeDir.getFileName());
+            zipEntryName = String.format("%s%s", relativeDir.getFileName(), System.lineSeparator());
         } else {
-            zipEntryName = String.format("%s\\%s\\", relativeDir.getFileName(), relativeDir.relativize(fileIn.toPath()));
+            zipEntryName = String.format("%s%s%s%s", relativeDir.getFileName(), System.lineSeparator(),
+                    relativeDir.relativize(fileIn.toPath()), System.lineSeparator());
         }
         print("dirPath " + zipEntryName);
         zos.putNextEntry(new ZipEntry(zipEntryName));

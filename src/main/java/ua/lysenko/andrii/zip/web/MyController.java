@@ -29,6 +29,7 @@ public class MyController {
 
     @GetMapping(path = "uploadForm")
     public String uploadForm(Model model) throws IOException {
+        storageService.init();
         model.addAttribute("zipFiles",
                 storageService.getAllFiles()
                         .map(path -> "download/zip/" + path.toString()).collect(Collectors.toList()));
