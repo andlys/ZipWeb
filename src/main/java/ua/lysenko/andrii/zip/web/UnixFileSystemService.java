@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-//@Service
+@Service
 public class UnixFileSystemService extends FileSystemService {
 
     public UnixFileSystemService() {
