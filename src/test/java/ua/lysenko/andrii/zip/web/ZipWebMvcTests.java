@@ -37,5 +37,5 @@ public class ZipWebMvcTests {
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/uploadForm"));
     }
-    */
+
 }
