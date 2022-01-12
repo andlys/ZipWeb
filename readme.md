@@ -19,7 +19,13 @@ https://github.com/andlys/Java-Zip
 
   `mvn package`
 
- `docker build -t alysenko/zip_web .`
+ `docker build -t alysenkofx/zip_web:zip .`
 
- `docker run -p 8080:8080 alysenko/zip_web`
+or
+
+`docker pull alysenkofx/zip_web`
+
+and then run
+
+ `docker run -p 8080:8080 alysenkofx/zip_web:zip`
  - Work in progress...
