@@ -9,6 +9,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
 @WebMvcTest(MyController.class)
 public class ZipWebMvcTests {
 
@@ -36,6 +42,26 @@ public class ZipWebMvcTests {
                         .file("myFile", new byte[1024]))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/uploadForm"));
+    }
+
+    @Test
+    public void mockitoTest() throws Exception {
+        StorageService mock = mock(StorageService.class);
+        when(mock.getAllFiles()).thenReturn(Stream.of(Path.of("myFile1.txt"), Path.of("myFile2.jpg")));
+        assertThat(mock.getAllFiles().count()).isEqualTo(2);
+    }
+
+    @Test
+    public void mockitoTestFilesPrintedToView() throws Exception {
+        when(storageService.getAllFiles()).thenReturn(Stream.of(Path.of("myFile1.txt"), Path.of("myFile2.jpg")));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/uploadForm"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("uploadForm"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(Matchers.containsString("myFile1.txt")))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(Matchers.containsString("myFile2.jpg")));
     }
 
 }
