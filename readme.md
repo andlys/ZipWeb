@@ -23,7 +23,7 @@ https://github.com/andlys/Java-Zip
 
 or
 
-`docker pull alysenkofx/zip_web`
+`docker pull alysenkofx/zip_web:zip`
 
 and then run
 
