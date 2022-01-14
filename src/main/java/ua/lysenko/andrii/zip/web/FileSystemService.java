@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-public abstract class FileSystemService implements StorageService {
+public class FileSystemService implements StorageService {
 
     protected final Path baseDir;
     protected final Path tmpZipDir;
