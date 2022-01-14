@@ -1,5 +1,8 @@
 package ua.lysenko.andrii.zip;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,15 +14,15 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static ua.lysenko.andrii.zip.Print.print;
-
 public class UnZipper {
+
+    private static Logger log = LoggerFactory.getLogger(UnZipper.class);
 
     public static void unzip(String pathZipFile) {
         File zipFile = new File(pathZipFile);
         try (ZipInputStream zos = new ZipInputStream(new FileInputStream(zipFile))) {
             unzip(zipFile, zos);
-            print("Success unzipping to " + getOutputDirectory(zipFile));
+            log.info("Success unzipping to " + getOutputDirectory(zipFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,10 +34,10 @@ public class UnZipper {
         while ((Objects.nonNull(zipEntry = zipInputStream.getNextEntry()))) {
             if (isDirectory(zipEntry)) {
                 Files.createDirectories(Paths.get(getOutputDirectory(zipFile), zipEntry.getName()));
-                print("dirPath " + zipEntry.getName());
+                log.info("dirPath " + zipEntry.getName());
             } else {
                 writeFile(zipFile, zipInputStream, zipEntry);
-                print("filePath " + zipEntry.getName());
+                log.info("filePath " + zipEntry.getName());
             }
         }
     }

@@ -1,8 +1,11 @@
 package ua.lysenko.andrii.zip;
 
-import static ua.lysenko.andrii.zip.Print.print;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+
+    private static Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws InterruptedException {
         if (args.length == 0) {
@@ -12,13 +15,13 @@ public class Main {
         switch (args[0]) {
             case "-zip":
                 if (args.length != 3)
-                    print("Invalid list of arguments for -zip. Read -help");
+                    log.info("Invalid list of arguments for -zip. Read -help");
                 else
                     Zipper.zip(args[1], args[2]);
                 break;
             case "-unzip":
                 if (args.length != 2)
-                    print("Invalid list of arguments for -unzip. Read -help");
+                    log.info("Invalid list of arguments for -unzip. Read -help");
                 else
                     UnZipper.unzip(args[1]);
                 break;
@@ -30,8 +33,8 @@ public class Main {
     }
 
     private static void printHelp() {
-        print("This utility can be used to zip/unzip archives, usage:");
-        print("-zip fileOrDirectoryToZip output.zip " + System.lineSeparator() + "-unzip file.zip");
+        log.info("This utility can be used to zip/unzip archives, usage:");
+        log.info("-zip fileOrDirectoryToZip output.zip " + System.lineSeparator() + "-unzip file.zip");
     }
 
     public static void mainNoArgs() throws InterruptedException {

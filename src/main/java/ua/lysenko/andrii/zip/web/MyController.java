@@ -1,7 +1,8 @@
 package ua.lysenko.andrii.zip.web;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -22,10 +23,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Controller
 @RequestMapping
 public class MyController {
+
+    private Logger log = LoggerFactory.getLogger(MyController.class);
 
     private final StorageService storageService;
 

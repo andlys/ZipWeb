@@ -22,13 +22,15 @@ public class StorageConfiguration {
 
     @Bean
     public StorageService storageService() {
-        if (storageConfigurationProperties.getType().equals("fs")) {
-            return new FileSystemService(
-                    Paths.get(fileSystemStorageConfigurationProperties.getBaseDir()),
-                    Paths.get(fileSystemStorageConfigurationProperties.getTmpZipDir())
-            );
+        switch (storageConfigurationProperties.getType()) {
+            case FS:
+                return new FileSystemService(
+                        Paths.get(fileSystemStorageConfigurationProperties.getBaseDir()),
+                        Paths.get(fileSystemStorageConfigurationProperties.getTmpZipDir()));
+            case S3:
+                throw new UnsupportedOperationException("To be done");
+            default:
+                throw new RuntimeException("Invalid storage service configuration");
         }
-
-        throw new RuntimeException("Invalid storage service configuration");
     }
 }

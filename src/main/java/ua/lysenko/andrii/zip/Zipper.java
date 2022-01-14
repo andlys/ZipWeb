@@ -1,5 +1,8 @@
 package ua.lysenko.andrii.zip;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,16 +13,16 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static ua.lysenko.andrii.zip.Print.print;
-
 public class Zipper {
+
+    private static Logger log = LoggerFactory.getLogger(Zipper.class);
 
     public static void zip(String pathIn, String pathOut) {
         File fileIn = new File(pathIn);
         File fileOut = new File(pathOut);
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(fileOut))) {
             zip(fileIn, zos);
-            print("Success packing to " + fileOut.getAbsolutePath());
+            log.info("Success packing to " + fileOut.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,7 +59,7 @@ public class Zipper {
         zos.putNextEntry(new ZipEntry(zipPath));
         FileUtils.writeBytes(zos, fileIn);
         zos.closeEntry();
-        print("filePath " + zipPath);
+        log.info("filePath " + zipPath);
     }
 
     private static void zipDirectory(File fileIn, ZipOutputStream zos, Path relativeDir) throws IOException {
@@ -66,7 +69,7 @@ public class Zipper {
         } else {
             zipEntryName = String.format("%s/%s/", relativeDir.getFileName(), relativeDir.relativize(fileIn.toPath()));
         }
-        print("dirPath " + zipEntryName);
+        log.info("dirPath " + zipEntryName);
         zos.putNextEntry(new ZipEntry(zipEntryName));
         zos.closeEntry();
     }

@@ -6,13 +6,13 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConfigurationProperties(prefix = "zipweb.storage")
 @ConstructorBinding
 public class StorageConfigurationProperties {
-    private final String type;
+    private final StorageType type;
 
-    public StorageConfigurationProperties(String type) {
+    public StorageConfigurationProperties(StorageType type) {
         this.type = type;
     }
 
-    public String getType() {
+    public StorageType getType() {
         return type;
     }
 
