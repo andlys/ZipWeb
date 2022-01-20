@@ -40,7 +40,7 @@ public class MyController {
     public String uploadForm(Model model) throws IOException {
         storageService.init();
         model.addAttribute("zipFiles",
-                storageService.getAllFiles()
+                storageService.getAllFiles().stream()
                         .map(path -> "download/zip/" + path.toString()).collect(Collectors.toList()));
         return "uploadForm";
     }

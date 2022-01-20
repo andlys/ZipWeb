@@ -11,7 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileSystemService implements StorageService {
 
@@ -36,10 +37,12 @@ public class FileSystemService implements StorageService {
     }
 
     @Override
-    public Stream<Path> getAllFiles() throws IOException {
+    public List<String> getAllFiles() throws IOException {
         return Files.walk(baseDir).filter(path -> !path.equals(baseDir))
                 .filter(path -> ! Files.isDirectory(path))
-                .map(baseDir::relativize);
+                .map(baseDir::relativize)
+                .map(Path::toString)
+                .collect(Collectors.toList());
     }
 
     @Override

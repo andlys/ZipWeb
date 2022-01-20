@@ -17,7 +17,7 @@ import ua.lysenko.andrii.zip.Zipper;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.stream.Stream;
+import java.util.List;
 
 public class AmazonS3Service implements StorageService {
 
@@ -54,8 +54,8 @@ public class AmazonS3Service implements StorageService {
     }
 
     @Override
-    public Stream<Path> getAllFiles() throws IOException {
-        return Stream.of(Path.of("lorem3.txt"));
+    public List<String> getAllFiles() throws IOException {
+        return List.of("lorem3.txt");
     }
 
     @Override
