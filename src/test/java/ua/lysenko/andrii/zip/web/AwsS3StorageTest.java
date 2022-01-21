@@ -22,10 +22,10 @@ public class AwsS3StorageTest {
                 .region(region)
                 .build();
 
-        PutObjectRequest objectRequest = PutObjectRequest.builder()
-                .bucket("zip-aws-bucket")
-                .key(file.getName())
-                .build();
+//        PutObjectRequest objectRequest = PutObjectRequest.builder()
+//                .bucket("zip-aws-bucket")
+//                .key(file.getName())
+//                .build();
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket("zip-aws-bucket")
@@ -34,6 +34,6 @@ public class AwsS3StorageTest {
 
         s3.getObject(getObjectRequest);
 
-        s3.putObject(objectRequest, RequestBody.fromInputStream(new FileInputStream(file), file.length()));
+//        s3.putObject(objectRequest, RequestBody.fromInputStream(new FileInputStream(file), file.length()));
     }
 }

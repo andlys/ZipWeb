@@ -34,7 +34,6 @@ public class StorageConfiguration {
                         Paths.get(fileSystemStorageConfigurationProperties.getTmpZipDir()));
             case S3:
                 return new AmazonS3Service(amazonS3StorageConfigurationProperties.getBucket(),
-                        Paths.get(amazonS3StorageConfigurationProperties.getBaseDir()),
                         Paths.get(amazonS3StorageConfigurationProperties.getTmpZipDir()));
             default:
                 throw new RuntimeException("Invalid storage service configuration");

@@ -7,22 +7,15 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConstructorBinding
 public class AmazonS3StorageConfigurationProperties {
     private final String bucket;
-    private final String baseDir;
-
     private final String tmpZipDir;
 
-    public AmazonS3StorageConfigurationProperties(String bucket, String baseDir, String tmpZipDir) {
+    public AmazonS3StorageConfigurationProperties(String bucket, String tmpZipDir) {
         this.bucket = bucket;
-        this.baseDir = baseDir;
         this.tmpZipDir = tmpZipDir;
     }
 
     public String getBucket() {
         return bucket;
-    }
-
-    public String getBaseDir() {
-        return baseDir;
     }
 
     public String getTmpZipDir() {

@@ -17,5 +17,5 @@ public interface StorageService {
 
     public Resource getFile(String fileName) throws IOException;
 
-    public Resource getAllFilesZip() throws FileNotFoundException;
+    public Resource getAllFilesZip() throws IOException;
 }

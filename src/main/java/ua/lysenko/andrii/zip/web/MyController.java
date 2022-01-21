@@ -69,7 +69,7 @@ public class MyController {
 
     @GetMapping("/download/zipAll")
     @ResponseBody
-    public ResponseEntity<Resource> downloadZipAll() throws FileNotFoundException {
+    public ResponseEntity<Resource> downloadZipAll() throws IOException {
         log.info("zip all files");
         Resource resourceZipped = storageService.getAllFilesZip();
         String fileNameZip = "all_files_" + System.currentTimeMillis() + ".zip";
